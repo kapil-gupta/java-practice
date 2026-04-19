@@ -32,7 +32,11 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public List<Student> findAll() {
         // Here Student represents the JPA entity class and not table in JPQL
-        TypedQuery<Student> createdQuery = entityManager.createQuery("From Student", Student.class);
+        //TypedQuery<Student> createdQuery = entityManager.createQuery("From Student", Student.class);
+
+        // Here Student represents the JPA entity class and not table in JPQL
+        // Added sorting
+        TypedQuery<Student> createdQuery = entityManager.createQuery("From Student ORDER BY firstName ASC", Student.class);
 
         return createdQuery.getResultList();
     }
