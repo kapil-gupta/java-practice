@@ -19,11 +19,34 @@ public class DemoApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
 		return runner -> {
-			//createStudent(studentDAO);
+			// createStudent(studentDAO);
 			// listAllStudents(studentDAO);
-			listAllStudentsByFirstName(studentDAO);
+			// listAllStudentsByFirstName(studentDAO);
+			updateStudent(studentDAO);
+
 
 		};
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		int id = 1;
+		System.out.println("First Retrieve the Student with Id => "+id);
+
+		Student s  = studentDAO.findById(id);
+		System.out.println("Student Current Data ");
+		System.out.println(s);
+
+		// Updating the Object
+		s.setEmail("abc@gmail.com");
+		s.setFirstName("AAA");
+		s.setLastName("BBB");
+
+		// Now Update the object in DB
+		studentDAO.update(s);
+
+		System.out.println("Student Updated Data ");
+		System.out.println(s);
+
 	}
 
 	private void listAllStudentsByFirstName(StudentDAO studentDAO) {
