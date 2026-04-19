@@ -2,9 +2,12 @@ package com.kapilspringjpa.demo.entity;
 
 import com.kapilspringjpa.demo.interfaces.StudentDAO;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class StudentDAOImpl implements StudentDAO {
@@ -24,5 +27,13 @@ public class StudentDAOImpl implements StudentDAO {
     @Override
     public Student findById(Integer id) {
         return entityManager.find(Student.class, id);
+    }
+
+    @Override
+    public List<Student> findAll() {
+        // Here Student represents the JPA entity class and not table in JPQL
+        TypedQuery<Student> createdQuery = entityManager.createQuery("From Student", Student.class);
+
+        return createdQuery.getResultList();
     }
 }
