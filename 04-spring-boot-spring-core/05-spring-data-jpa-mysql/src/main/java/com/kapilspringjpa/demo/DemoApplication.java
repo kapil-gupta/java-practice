@@ -23,11 +23,30 @@ public class DemoApplication {
 
 	private void createStudent(StudentDAO studentDAO){
 		System.out.println("Started creating student");
-		Student theStudent = new Student("Kapil","Gupta","kapil.gupta.softeng@gmail.com");
+		Student theStudent1 = new Student("Kapil","Gupta","kapil.gupta.softeng@gmail.com");
+		Student theStudent2 = new Student("Ashish","Gupta","Ashish.gupta.softeng@gmail.com");
+		Student theStudent3 = new Student("Rahul","Gupta","Rahul.gupta.softeng@gmail.com");
+		Student theStudent4 = new Student("Manish","Gupta","Manish.gupta.softeng@gmail.com");
+		Student theStudent5 = new Student("Akshay","Gupta","Akshay.gupta.softeng@gmail.com");
 
-		studentDAO.save(theStudent);
+		studentDAO.save(theStudent1);
+		studentDAO.save(theStudent2);
+		studentDAO.save(theStudent3);
+		studentDAO.save(theStudent4);
+		studentDAO.save(theStudent5);
 
-		System.out.println("Student Created Id => "+theStudent.getId());
+		System.out.println("Student 1 Created Id => "+theStudent1.getId());
+		System.out.println("Student 2 Created Id => "+theStudent2.getId());
+		System.out.println("Student 3 Created Id => "+theStudent3.getId());
+		System.out.println("Student 4 Created Id => "+theStudent4.getId());
+		System.out.println("Student 5 Created Id => "+theStudent5.getId());
+
+
+		// Now Read the Student
+
+		Student someStudent =studentDAO.findById(3);
+		// toString method will be used to print the student data
+		System.out.println("Selected Student Data =>  " +someStudent);
 
 	}
 }
