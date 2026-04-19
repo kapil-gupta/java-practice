@@ -24,11 +24,18 @@ public class DemoApplication {
 			// listAllStudentsByFirstName(studentDAO);
 			//updateStudent(studentDAO);
 
-			deleteStudent(studentDAO);
+			//deleteStudent(studentDAO);
+
+			deleteAllStudent(studentDAO);
 			
 
 
 		};
+	}
+
+	private void deleteAllStudent(StudentDAO studentDAO) {
+		studentDAO.deleteAll();
+		System.out.println("All Student deleted");
 	}
 
 	private void deleteStudent(StudentDAO studentDAO) {
