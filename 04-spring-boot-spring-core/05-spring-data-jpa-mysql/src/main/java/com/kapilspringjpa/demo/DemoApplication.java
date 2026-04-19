@@ -22,10 +22,27 @@ public class DemoApplication {
 			// createStudent(studentDAO);
 			// listAllStudents(studentDAO);
 			// listAllStudentsByFirstName(studentDAO);
-			updateStudent(studentDAO);
+			//updateStudent(studentDAO);
+
+			deleteStudent(studentDAO);
+			
 
 
 		};
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		int id = 2;
+		System.out.println("First Retrieve the Student with Id => "+id);
+
+		Student s  = studentDAO.findById(id);
+		System.out.println("Student Current Data ");
+		System.out.println(s);
+
+
+		studentDAO.delete(2);
+
+		System.out.println("Student deleted ");
 	}
 
 	private void updateStudent(StudentDAO studentDAO) {
