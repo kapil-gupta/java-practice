@@ -20,8 +20,17 @@ public class DemoApplication {
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO){
 		return runner -> {
 			//createStudent(studentDAO);
-			 listAllStudents(studentDAO);
+			// listAllStudents(studentDAO);
+			listAllStudentsByFirstName(studentDAO);
+
 		};
+	}
+
+	private void listAllStudentsByFirstName(StudentDAO studentDAO) {
+		List<Student> allStudents  = studentDAO.findAllByFirstName("kapil");
+
+		for(Student s: allStudents)
+			System.out.println(s);
 	}
 
 	private void listAllStudents(StudentDAO studentDAO) {
