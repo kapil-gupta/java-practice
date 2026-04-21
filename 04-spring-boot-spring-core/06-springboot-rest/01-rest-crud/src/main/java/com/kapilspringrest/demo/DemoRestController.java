@@ -37,12 +37,13 @@ public class DemoRestController {
     }
     @GetMapping("/students/{studentId}")
     public Student getStudentById(@PathVariable int studentId){
-        if(studentId<=0 || studentId>theStudents.size()){
+        if(studentId<0 || studentId>theStudents.size()){
             throw new StudentNotFoundException("Student with Id "+studentId+ " not found");
         }
         return theStudents.get(studentId);
     }
 
+    /*
     @ExceptionHandler
     public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc){
         StudentErrorResponse res = new StudentErrorResponse(
@@ -52,4 +53,16 @@ public class DemoRestController {
         return new ResponseEntity<>(res, HttpStatus.NOT_FOUND);
 
     }
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
+        StudentErrorResponse res = new StudentErrorResponse();
+        res.setMessage(exc.getMessage());
+        res.setStatus(HttpStatus.BAD_REQUEST.value());
+        res.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(res, HttpStatus.BAD_REQUEST);
+
+    }
+    */
+
 }
