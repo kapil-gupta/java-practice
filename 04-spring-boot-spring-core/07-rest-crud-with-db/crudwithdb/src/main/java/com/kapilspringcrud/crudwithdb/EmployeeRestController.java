@@ -1,6 +1,5 @@
 package com.kapilspringcrud.crudwithdb;
 
-import com.kapilspringcrud.crudwithdb.dao.EmployeeDAO;
 import com.kapilspringcrud.crudwithdb.entity.Employee;
 import com.kapilspringcrud.crudwithdb.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +57,8 @@ public class EmployeeRestController {
     }
 
     @DeleteMapping("/employees/{empId}")
-    public void deleteById(@PathVariable int empId){
-        theEmpService.delete(empId);
+    public String deleteById(@PathVariable int empId) {
+        return theEmpService.delete(empId);
     }
 
 }

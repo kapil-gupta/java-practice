@@ -8,5 +8,6 @@ public interface EmployeeService {
     List<Employee> findAll();
     Employee findById(int empId);
     Employee create(Employee emp);
-    void delete(int empId);
+
+    String delete(int empId);
 }

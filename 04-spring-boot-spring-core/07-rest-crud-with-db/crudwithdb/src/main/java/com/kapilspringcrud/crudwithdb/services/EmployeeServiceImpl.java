@@ -30,9 +30,16 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Employee create(Employee emp) {
         return theEmployeeDAO.create(emp);
     }
+
     @Transactional
     @Override
-    public void delete(int empId) {
+    public String delete(int empId) {
+
+        Employee emp = theEmployeeDAO.findById(empId);
+        if (emp == null) {
+            throw new RuntimeException("Employee with id " + empId + " Not found");
+        }
         theEmployeeDAO.delete(empId);
+        return "EmpId " + empId + " is deleted";
     }
 }
