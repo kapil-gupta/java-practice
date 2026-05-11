@@ -6,6 +6,8 @@ import com.kapil.accounts.dto.CustomerDto;
 import com.kapil.accounts.entity.Account;
 import com.kapil.accounts.entity.Customer;
 import com.kapil.accounts.exceptions.CustomerAlreadyExistsException;
+import com.kapil.accounts.exceptions.ResourceNotFoundException;
+import com.kapil.accounts.mapper.AccountMapper;
 import com.kapil.accounts.mapper.CustomerMapper;
 import com.kapil.accounts.repository.AccountRepository;
 import com.kapil.accounts.repository.CustomerRepository;
@@ -37,6 +39,19 @@ public class IAccountServiceImpl implements IAccountService {
         Customer savedCustomer = customerRepository.save(customer);
         accountRepository.save(createNewAccount(savedCustomer));
 
+    }
+
+    @Override
+    public CustomerDto findAccountByMobileNumber(String mobileNumber) {
+        Customer existingCustomer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Customer","mobileNumber",mobileNumber)
+        );
+        Account account = accountRepository.findByCustomerId(existingCustomer.getCustomerId()).orElseThrow(
+                () -> new ResourceNotFoundException("Account","customerId",existingCustomer.getCustomerId().toString())
+        );
+        CustomerDto customerDto = CustomerMapper.toCustomerDto(existingCustomer, new CustomerDto());
+        customerDto.setAccount(AccountMapper.toAccountDto(account, new AccountDto()));
+        return customerDto;
     }
 
     private Account createNewAccount(Customer customer) {

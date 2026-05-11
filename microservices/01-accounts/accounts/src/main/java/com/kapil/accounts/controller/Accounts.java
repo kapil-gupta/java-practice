@@ -27,4 +27,10 @@ public class Accounts {
                 .body(new ResponseDto(AccountConstants.STATUS_201, AccountConstants.MESSAGE_201));
 
     }
+
+    @GetMapping("/fetch")
+    public ResponseEntity<CustomerDto> fetchAccountByMobileNumber(@RequestParam("mobileNumber") String mobileNumber){
+       CustomerDto customerDto =  iAccountService.findAccountByMobileNumber(mobileNumber);
+       return  ResponseEntity.status(HttpStatus.OK).body(customerDto);
+    }
 }

@@ -3,7 +3,7 @@ package com.kapil.accounts.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data @AllArgsConstructor
+@Data
 public class AccountDto {
     private Long accountNumber;
     private String accountType;
