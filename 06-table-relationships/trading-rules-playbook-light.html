@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Rules & SMC Mindset</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #f5f1eb;
+    --dark: #ede8e0;
+    --card: #ffffff;
+    --border: #d8d0c4;
+    --accent: #b8860b;
+    --red: #c0392b;
+    --green: #1a7a3a;
+    --blue: #1a5fa8;
+    --muted: #7a7468;
+    --text: #2c2820;
+    --white: #1a1410;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.12;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+
+  /* Header */
+  .header { margin-bottom: 56px; }
+
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-tag::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 88px);
+    color: var(--white);
+    line-height: 0.9;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* Section */
+  .section { margin-bottom: 52px; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: #c8c0b4;
+    line-height: 1;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  .section-accent { color: var(--accent); }
+
+  /* Cards */
+  .cards { display: grid; gap: 12px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 22px;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover { border-color: #b0a898; }
+
+  .card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .card-body {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .card-accent-gold  { border-left: 2px solid var(--accent); }
+  .card-accent-green { border-left: 2px solid var(--green); }
+  .card-accent-blue  { border-left: 2px solid var(--blue); }
+  .card-accent-red   { border-left: 2px solid var(--red); }
+
+  /* Grid 2 col */
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+
+  /* Quote */
+  .quote {
+    border-left: 2px solid var(--accent);
+    padding: 16px 20px;
+    background: #fef9ec;
+    border-radius: 0 6px 6px 0;
+    margin: 16px 0;
+  }
+
+  .quote-text {
+    font-size: 15px;
+    color: #8a6a10;
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 6px;
+  }
+
+  .quote-attr {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* Checklist */
+  .checklist { display: grid; gap: 10px; }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .check-box.red   { border-color: #f0c0c0; background: #fff5f5; }
+  .check-box.green { border-color: var(--green); background: #e6f5ec; display:flex; align-items:center; justify-content:center; }
+  .check-box.green::after { content: '✓'; font-size: 10px; color: var(--green); }
+
+  /* Rule cards */
+  .rule-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .rule-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .rule-icon.gold   { background: #fef3d0; }
+  .rule-icon.green  { background: #e6f5ec; }
+  .rule-icon.blue   { background: #e6f0fa; }
+  .rule-icon.red    { background: #fde8e8; }
+
+  .rule-title { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 5px; }
+  .rule-desc  { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+  /* Comparison */
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) { .compare { grid-template-columns: 1fr; } }
+
+  .compare-side {
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+
+  .compare-side.bad  { background: #fff5f5; border: 1px solid #f0c0c0; }
+  .compare-side.good { background: #edfaf2; border: 1px solid #a0d4b4; }
+
+  .compare-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .compare-label.red   { color: var(--red); }
+  .compare-label.green { color: var(--green); }
+
+  .compare-item {
+    font-size: 13px;
+    color: #8a3030;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+  }
+
+  .compare-item.good-item { color: #1a5a2a; }
+  .compare-item::before { content: '→'; flex-shrink: 0; }
+  .compare-side.bad  .compare-item::before { color: var(--red); }
+  .compare-side.good .compare-item::before { color: var(--green); }
+  .compare-item:last-child { border-bottom: none; }
+
+  /* Warning */
+  .warning {
+    background: #fff5f5;
+    border: 1px solid #f0c0c0;
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+
+  .warning-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .warning-title::before { content: '⚠'; font-size: 12px; }
+
+  .warning-items { display: grid; gap: 8px; }
+
+  .warning-item {
+    font-size: 13px;
+    color: #8a3030;
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .warning-item::before { content: '→'; position: absolute; left: 0; color: var(--red); }
+
+  /* Stat strip */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 600px) { .stat-strip { grid-template-columns: repeat(2,1fr); } }
+
+  .stat {
+    background: var(--card);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 34px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* Signal cards for rules */
+  .signal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) { .signal-grid { grid-template-columns: 1fr; } }
+
+  .signal-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .signal-card::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 3px;
+    height: 100%;
+  }
+
+  .signal-card.buy::after  { background: var(--green); }
+  .signal-card.sell::after { background: var(--red); }
+  .signal-card.wait::after { background: var(--accent); }
+
+  .signal-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+
+  .signal-tag.buy  { background: #e6f5ec; color: var(--green); }
+  .signal-tag.sell { background: #fde8e8; color: var(--red); }
+  .signal-tag.wait { background: #fef3d0; color: var(--accent); }
+  .signal-tag.rsi  { background: #e6f0fa; color: var(--blue); }
+
+  .signal-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .signal-body {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 40px 0;
+  }
+
+  /* SMC list */
+  .smc-list { display: grid; gap: 10px; }
+
+  .smc-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .smc-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    padding-top: 2px;
+    font-weight: 500;
+  }
+
+  .smc-text {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .smc-text strong { color: var(--white); }
+
+  /* Footer */
+  .footer {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    border: 1px solid #d4b848;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #fef9ec;
+  }
+
+  /* Animate */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section { animation: fadeUp 0.5s ease both; }
+  .section:nth-child(1) { animation-delay: 0.05s; }
+  .section:nth-child(2) { animation-delay: 0.10s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.20s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.30s; }
+  .section:nth-child(7) { animation-delay: 0.35s; }
+  .section:nth-child(8) { animation-delay: 0.40s; }
+  .section:nth-child(9) { animation-delay: 0.45s; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-tag">Trading Rules · SMC & Price Action · Personal Playbook</div>
+    <h1>TRADE THE <span>RULES.</span><br>NOT THE EMOTION.</h1>
+    <p class="header-sub">Your personal trading doctrine — compiled from your own notes, SMC principles, and market wisdom. Read this before every session.</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-val">HTF</div>
+      <div class="stat-label">Bias First. Always.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">0</div>
+      <div class="stat-label">Trades without a setup</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">1R</div>
+      <div class="stat-label">Max risk per trade</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">WAIT</div>
+      <div class="stat-label">When in doubt</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: TRADING RULES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div>
+        <div class="section-title">YOUR CORE <span class="section-accent">TRADING RULES</span></div>
+      </div>
+    </div>
+
+    <div class="signal-grid">
+      <div class="signal-card buy">
+        <div class="signal-tag buy">BUY SIGNAL</div>
+        <div class="signal-title">Stock is above January High</div>
+        <div class="signal-body">When price clears and holds above the January high, the structure is bullish. This is your long bias. Execute only on proper retest and confirmation — not on the initial break.</div>
+      </div>
+      <div class="signal-card sell">
+        <div class="signal-tag sell">SELL SIGNAL</div>
+        <div class="signal-title">Stock is below January Low</div>
+        <div class="signal-body">When price breaks and holds below the January low, the structure is bearish. This is your short bias. Do not fight it. Do not buy dips in a structural downtrend.</div>
+      </div>
+      <div class="signal-card sell">
+        <div class="signal-tag rsi">WEEKLY RSI ≥ 85</div>
+        <div class="signal-title">Extreme Overbought — Exit & Avoid 2 Years</div>
+        <div class="signal-body">If Weekly RSI crosses 85 on any stock or sector — sell it immediately. Do not buy that instrument for the next 2 years. This is a hard rule. No exceptions. Extreme RSI = extreme risk.</div>
+      </div>
+      <div class="signal-card buy">
+        <div class="signal-tag rsi">WEEKLY RSI ≤ 25</div>
+        <div class="signal-title">Extreme Oversold — Look for Longs</div>
+        <div class="signal-body">Weekly RSI at or below 25 signals extreme oversold conditions. Begin looking for buy setups with confluence from structure, liquidity sweeps, and demand zones. Do not catch a falling knife — wait for confirmation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2: OPENING RANGE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div>
+        <div class="section-title">THE OPENING <span class="section-accent">RANGE RULE</span></div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-text">"Stop losing money in the first 30 minutes. Most traders jump in too early and get chopped up."</div>
+      <div class="quote-attr">— Your own notes</div>
+    </div>
+
+    <div class="cards">
+      <div class="card card-accent-red">
+        <div class="card-label">The Problem</div>
+        <div class="card-title">First 30 Minutes Is a Trap</div>
+        <div class="card-body">The opening 30 minutes is maximum noise, maximum manipulation, and minimum signal. Market makers are filling orders, stop hunts are happening, and algos are testing both sides. Entering here is gambling — not trading.</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px;">
+      <div class="card card-accent-green">
+        <div class="card-label">The Protocol — 4 Steps</div>
+        <div class="card-title">Opening Range Breakout + Retest</div>
+        <div class="checklist" style="margin-top:8px;">
+          <div class="check-item"><div class="check-box green"></div> Mark the HIGH and LOW of the first 15–30 minutes (the Opening Range)</div>
+          <div class="check-item"><div class="check-box green"></div> Wait for price to break OUT of that range cleanly — above high or below low</div>
+          <div class="check-item"><div class="check-box green"></div> Wait for price to RETEST that broken level and hold (old resistance = new support)</div>
+          <div class="check-item"><div class="check-box green"></div> THEN enter when price continues in the breakout direction</div>
+          <div class="check-item"><div class="check-box red"></div> No break + retest = No trade. Stay cash. Protect capital.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px;">
+      <div class="card" style="border-left:2px solid var(--accent); background:#fef9ec;">
+        <div class="card-label">Your Stop Loss</div>
+        <div class="card-title" style="color:var(--accent)">The opening range you just marked IS your stop loss level.</div>
+        <div class="card-body">If the range isn't broken cleanly — don't trade that day. Patience pays. Chasing chop doesn't. The key isn't taking more trades. It's avoiding the bad ones.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3: PRICE ACTION & MINDSET -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div>
+        <div class="section-title">PRICE ACTION <span class="section-accent">PRINCIPLES</span></div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-text">"No matter what tools or indicators you use for trading, your decision making must always be based on price action (supply/demand). This will mostly keep you on the right side."</div>
+      <div class="quote-attr">— Your notes</div>
+    </div>
+
+    <div class="cards">
+      <div class="grid2">
+        <div class="card card-accent-blue">
+          <div class="card-label">Candle Close = Intent</div>
+          <div class="card-title">Price doesn't move randomly.</div>
+          <div class="card-body">The close of a candle decides the delivery of the next. A <strong style="color:#1a1410">weak close = indecision</strong>. A <strong style="color:#1a1410">strong close = intent</strong>. Intent tells you whether price wants to Continue, Displace, or Retrace. The next candle executes that intent.</div>
+        </div>
+        <div class="card card-accent-gold">
+          <div class="card-label">Wicks Are Not Noise</div>
+          <div class="card-title">Wicks are the damage.</div>
+          <div class="card-body"><strong style="color:#1a1410">Upper wick</strong> → buy-side liquidity swept, shorts built. <strong style="color:#1a1410">Lower wick</strong> → sell-side liquidity taken, accumulation at discount. Retail sees fake breakouts. Smart Money sees positions filled. Bodies show acceptance. Wicks show manipulation.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px;">
+      <div class="grid2">
+        <div class="card card-accent-green">
+          <div class="card-label">Timeframe Rule</div>
+          <div class="card-title">Analyse on H1/H4. Enter on 5M/15M.</div>
+          <div class="card-body">Do your analysis on the 1H or 4H chart, then take your entry on the 5M or 15M. This eliminates noise on entry while keeping your bias clean from the higher timeframe. Dropping to lower timeframes without HTF context = more doubt, more mistakes.</div>
+        </div>
+        <div class="card card-accent-red">
+          <div class="card-label">Noise Warning</div>
+          <div class="card-title">Switch up when confused.</div>
+          <div class="card-body">If you cannot read the chart — it's the noise, not you. Switch to a higher timeframe. Clarity lives on higher timeframes. Confusion lives on lower ones. <strong style="color:#1a1410">Master one setup. One timeframe. One instrument.</strong> Simple beats exciting. Every time.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px;">
+      <div class="card card-accent-blue">
+        <div class="card-label">4H Liquidity Sweep → 15M Confirmation</div>
+        <div class="card-title">The Core Entry Framework (ICT/SMC)</div>
+        <div class="card-body">
+          1. Identify a <strong style="color:#1a1410">4H Liquidity Sweep</strong> — price moves sharply to take stops at highs/lows before reversing.<br><br>
+          2. Drop to 15M. Wait for <strong style="color:#1a1410">MSS (Market Structure Shift)</strong> — price breaks a recent high/low signalling a trend change.<br><br>
+          3. Confirm with <strong style="color:#1a1410">CISD (Change In State of Delivery)</strong> — a specific MSS variant indicating a bias flip (bullish → bearish or vice versa).<br><br>
+          4. Enter at premium/discount zone. Use proper risk management. Backtest before deploying live.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 4: SMC FACTS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div>
+        <div class="section-title">SMC FACTS THAT <span class="section-accent">SAVE YEARS</span></div>
+      </div>
+    </div>
+
+    <div class="smc-list">
+      <div class="smc-item">
+        <div class="smc-num">01</div>
+        <div class="smc-text"><strong>Smart Money doesn't chase price. They engineer liquidity first.</strong> If price hasn't taken stops yet, the move probably isn't real. Wait for the sweep before assuming direction.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">02</div>
+        <div class="smc-text"><strong>95% of traders lose because they enter where Smart Money is exiting.</strong> Your buy is their sell. Learn to read where the exit — not the entry — is happening.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">03</div>
+        <div class="smc-text"><strong>Order Blocks are NOT entry signals. They are areas of interest.</strong> If you enter blindly at every OB, you're trading hope — not logic. Require confluence before acting.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">04</div>
+        <div class="smc-text"><strong>If price moves without liquidity being taken — be careful.</strong> Markets are designed to trap traders before real expansion. No sweep = no conviction.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">05</div>
+        <div class="smc-text"><strong>An FVG without market structure + liquidity context is just a box on your chart.</strong> Fair Value Gaps aren't magic. They require context to be valid entry zones.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">06</div>
+        <div class="smc-text"><strong>Institutions trade imbalances, positioning, and risk — not indicators.</strong> Indicators are for confirmation, never for decision-making. Price is the primary input.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">07</div>
+        <div class="smc-text"><strong>SMC is reactive execution at pre-defined levels — not prediction.</strong> You don't predict the market. You wait for it to show its hand, then react with precision.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">08</div>
+        <div class="smc-text"><strong>The market doesn't respect support & resistance. It respects where money is trapped.</strong> That's where real reactions happen — not at textbook S/R lines drawn with a ruler.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">09</div>
+        <div class="smc-text"><strong>Most "breakouts" exist only to create liquidity.</strong> The real move starts after traders are stopped out. Don't be the stop. Wait for the sweep, then trade the real move.</div>
+      </div>
+      <div class="smc-item">
+        <div class="smc-num">10</div>
+        <div class="smc-text"><strong>Order Blocks are where the move was born.</strong> Price returns to OBs to rebalance unfilled institutional orders. Note it. Print it. Learn it. This is why price snaps back before exploding.</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:16px;">
+      <div class="warning">
+        <div class="warning-title">Final SMC Truth</div>
+        <div class="warning-items">
+          <div class="warning-item">SMC won't make you profitable. Discipline, patience, and risk management will.</div>
+          <div class="warning-item">SMC just shows you WHERE to execute. The HOW is still your psychology and discipline.</div>
+          <div class="warning-item">If your SMC setup needs hope — it's not SMC. It's gambling.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 5: ACCOUNT BLOWING REASONS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div>
+        <div class="section-title">WHY ACCOUNTS <span class="section-accent">BLOW UP</span></div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-text">"Blowing a trading account isn't a skill issue. It's a discipline failure. Price action doesn't change. Liquidity doesn't change. Your behavior does — after a loss."</div>
+      <div class="quote-attr">— Your notes</div>
+    </div>
+
+    <div class="compare">
+      <div class="compare-side bad">
+        <div class="compare-label red">❌ How Accounts Die</div>
+        <div class="compare-item">Size up after a loss to recover</div>
+        <div class="compare-item">Trade outside kill zones</div>
+        <div class="compare-item">Force setups that aren't there</div>
+        <div class="compare-item">Ignore HTF bias entirely</div>
+        <div class="compare-item">Chase "disrespectful" price</div>
+        <div class="compare-item">Lower timeframe gambling after loss</div>
+        <div class="compare-item">"One more entry" mentality</div>
+        <div class="compare-item">Adjust lot size to feel better</div>
+      </div>
+      <div class="compare-side good">
+        <div class="compare-label green">✓ How Accounts Survive</div>
+        <div class="compare-item good-item">Risk less when off-sync with market</div>
+        <div class="compare-item good-item">Stop trading after max daily loss</div>
+        <div class="compare-item good-item">Journal executions — not P&L</div>
+        <div class="compare-item good-item">Treat drawdown as danger, not opportunity</div>
+        <div class="compare-item good-item">Protect capital like it's funded money</div>
+        <div class="compare-item good-item">No setup = no trade. Cash is a position.</div>
+        <div class="compare-item good-item">Clean HTF narrative before any entry</div>
+        <div class="compare-item good-item">Losses are data — not insults</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px;">
+      <div class="card" style="background:#edfaf2; border-color:#1a3a1a;">
+        <div class="card-label">The Goal Reframe</div>
+        <div class="card-title" style="color:var(--green);">"The goal isn't to be right today. The goal is to stay funded long enough for price to pay you."</div>
+        <div class="card-body">High-level traders don't trade every day. They wait for clean HTF narrative, liquidity taken, displacement, and entry at premium/discount. No setup = no trade. Patience is the edge.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 6: EXECUTION RULES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div>
+        <div class="section-title">EXECUTION <span class="section-accent">RULES</span></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="rule-card">
+        <div class="rule-icon gold">🎯</div>
+        <div>
+          <div class="rule-title">High Conviction Trade? Enter — Don't Wait for "Perfect"</div>
+          <div class="rule-desc">When you find an A+ setup, just enter. A+ setups move fast — waiting for the perfect entry means missing the trade. Enter with 20–25% of standard size if current price is away from your ideal level, and add the rest at your desired entry. Keep total risk the same as always. Best of both worlds.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon red">🚫</div>
+        <div>
+          <div class="rule-title">Missed Trade? Forget It. Move On.</div>
+          <div class="rule-desc">Missing one trade won't hurt you because it didn't happen. But taking a revenge trade because you missed one can seriously damage your account. If a trade is missed — forget it. Focus on the next one. There is always another setup.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon blue">📐</div>
+        <div>
+          <div class="rule-title">The 4 Rules of Consistent Execution</div>
+          <div class="rule-desc">
+            1. <strong style="color:#1a1410">Clearly defined setup</strong> — entry and exits known before you enter.<br>
+            2. <strong style="color:#1a1410">Rule-based</strong> — what to trade, when to trade, no improvisation.<br>
+            3. <strong style="color:#1a1410">Emotionless</strong> — robotic execution, no feelings involved.<br>
+            4. <strong style="color:#1a1410">Defined risk management</strong> — risk/reward is set before entry, always.<br>
+            Ignore any one of these and trading becomes very hard.
+          </div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon gold">🧘</div>
+        <div>
+          <div class="rule-title">After a Loss → Step Away. Always.</div>
+          <div class="rule-desc">Protect capital. Protect mindset. The market will always be there. Your real edge isn't the setup. It's your ability to NOT trade when your ego is triggered. Smart Money doesn't revenge trade. When price violates your POI — that's information, not an insult. Losses are data. Ego turns them into drawdown.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon green">📅</div>
+        <div>
+          <div class="rule-title">Weekend Homework Is Not Optional</div>
+          <div class="rule-desc">Successful traders plan the week ahead by doing their homework over the weekend. Unsuccessful traders get into the week without a plan and pick random trades, only to lose. Mark your key levels, identify your setups, define your bias on Sunday — before the week starts.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon blue">⏸</div>
+        <div>
+          <div class="rule-title">Mastering Sitting on Your Hands</div>
+          <div class="rule-desc">Mastering the art of sitting on your hands when there's no trade is a game changer. It can save you more money than constantly chasing trades outside your plan. No setup = sit. Waiting IS trading.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 7: MINDSET QUOTES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div>
+        <div class="section-title">MINDSET <span class="section-accent">ANCHORS</span></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="quote">
+        <div class="quote-text">"Trade like you expect nothing from the market. No dreams of big profits, no fear of losses, just pure execution. Follow your plan, take the setup, place your SL, manage your RR… and whatever the outcome is — profit or loss — you stay calm and move on. When you stop wanting something from the market, you start trading with clarity. And that's when your results improve."</div>
+        <div class="quote-attr">— Your notes</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-text">"Professional traders ask first: 'How much can I lose if I'm wrong?' Amateur traders ask first: 'How much can I make if I'm right?' That single question decides who survives. Smart Money thinks in risk. Retail thinks in reward."</div>
+        <div class="quote-attr">— Your notes</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-text">"One of the biggest goals in trading is freedom. Freedom of time. Freedom to travel. Freedom to live. But if you're scalping all day and your income depends on staring at a screen — you didn't escape a job. You just changed employers. Shift to higher timeframes. Trade less. Live more."</div>
+        <div class="quote-attr">— Your notes</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-text">"One year of discipline can outweigh ten years of mistakes. Consistency changes everything."</div>
+        <div class="quote-attr">— Your notes</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-text">"You don't suck at trading. You suck at waiting."</div>
+        <div class="quote-attr">— Your notes</div>
+      </div>
+
+      <div class="quote">
+        <div class="quote-text">"Your biggest enemy in trading isn't the market. It's seeing what you want instead of what's there."</div>
+        <div class="quote-attr">— Your notes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 8: PRE-SESSION CHECKLIST -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <div>
+        <div class="section-title">PRE-SESSION <span class="section-accent">CHECKLIST</span></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-label">Before You Open the Chart</div>
+          <div class="checklist" style="margin-top:4px;">
+            <div class="check-item"><div class="check-box"></div> Check Jan High / Jan Low bias for your instruments</div>
+            <div class="check-item"><div class="check-box"></div> Check Weekly RSI — above 85? Below 25?</div>
+            <div class="check-item"><div class="check-box"></div> Read HTF (4H/Daily) — what is the market structure?</div>
+            <div class="check-item"><div class="check-box"></div> Mark key liquidity levels, OBs, and FVGs</div>
+            <div class="check-item"><div class="check-box"></div> Define your bias: bullish / bearish / no trade today</div>
+            <div class="check-item"><div class="check-box"></div> Set your max loss for the day and stick to it</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">During the Session</div>
+          <div class="checklist" style="margin-top:4px;">
+            <div class="check-item"><div class="check-box"></div> Wait for Opening Range to form (first 15–30 min)</div>
+            <div class="check-item"><div class="check-box"></div> Only enter after break + retest of range</div>
+            <div class="check-item"><div class="check-box"></div> Check for 4H liquidity sweep before entry</div>
+            <div class="check-item"><div class="check-box"></div> Confirm MSS/CISD on 15M before pulling trigger</div>
+            <div class="check-item"><div class="check-box"></div> SL placed immediately after entry — no exceptions</div>
+            <div class="check-item"><div class="check-box"></div> Step away for 30 min after any loss</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px;">
+      <div class="card" style="background:#fef9ec; border-left:2px solid var(--accent);">
+        <div class="card-label">The Non-Negotiable Reminder</div>
+        <div class="card-title" style="color:var(--accent);">The market rewards those obsessed with Process. Execution. Risk Management. — Not profit hunters.</div>
+        <div class="card-body">Fix the mindset. Focus on execution. Focus on discipline. Focus on process. Profits come after you stop chasing them. Most trading accounts blow due to FOMO-driven, forced trades. The only real solution is disciplined execution of your trade plan.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-text">TRADING RULES · SMC PLAYBOOK · PERSONAL USE</div>
+    <div class="footer-badge">Process → Patience → Profits</div>
+  </div>
+
+</div>
+</body>
+</html>

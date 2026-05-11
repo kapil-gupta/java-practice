@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Psychology Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #f5f1eb;
+    --dark: #ede8e0;
+    --card: #ffffff;
+    --border: #d8d0c4;
+    --accent: #b8860b;
+    --red: #c0392b;
+    --green: #1a7a3a;
+    --blue: #1a5fa8;
+    --muted: #7a7468;
+    --text: #2c2820;
+    --white: #1a1410;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.15;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  .header-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-tag::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 10vw, 88px);
+    color: var(--white);
+    line-height: 0.9;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+  }
+
+  h1 span {
+    color: var(--accent);
+  }
+
+  .header-sub {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 300;
+    max-width: 500px;
+    line-height: 1.7;
+  }
+
+  /* Diagnosis strip */
+  .diagnosis {
+    background: #fff5f5;
+    border: 1px solid #f0c0c0;
+    border-left: 3px solid var(--red);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    display: grid;
+    gap: 12px;
+  }
+
+  .diagnosis-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .diagnosis-items {
+    display: grid;
+    gap: 8px;
+  }
+
+  .diagnosis-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    color: #8a3030;
+    line-height: 1.5;
+  }
+
+  .diagnosis-item .num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    background: #fde8e8;
+    padding: 2px 6px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 48px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .section-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: #c8c0b4;
+    line-height: 1;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  .section-accent {
+    color: var(--accent);
+  }
+
+  /* Cards */
+  .cards {
+    display: grid;
+    gap: 12px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 22px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+
+  .card:hover {
+    border-color: #b0a898;
+  }
+
+  .card-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .card-body {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .card-accent-left {
+    border-left: 2px solid var(--accent);
+  }
+
+  .card-accent-green {
+    border-left: 2px solid var(--green);
+  }
+
+  .card-accent-blue {
+    border-left: 2px solid var(--blue);
+  }
+
+  .card-accent-red {
+    border-left: 2px solid var(--red);
+  }
+
+  /* Rule cards */
+  .rule-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 22px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .rule-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .rule-icon.gold { background: #fef3d0; }
+  .rule-icon.green { background: #e6f5ec; }
+  .rule-icon.blue { background: #e6f0fa; }
+  .rule-icon.red { background: #fde8e8; }
+
+  .rule-content {}
+
+  .rule-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 5px;
+  }
+
+  .rule-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* Grid 2 col */
+  .grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .grid2 { grid-template-columns: 1fr; }
+  }
+
+  /* Checklist */
+  .checklist {
+    display: grid;
+    gap: 10px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .check-box {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .check-box.filled {
+    background: #e6f5ec;
+    border-color: var(--green);
+  }
+
+  .check-box.filled::after {
+    content: '✓';
+    font-size: 10px;
+    color: var(--green);
+  }
+
+  /* Stat strip */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  @media (max-width: 650px) {
+    .stat-strip { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .stat {
+    background: var(--card);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* Quote block */
+  .quote {
+    border-left: 2px solid var(--accent);
+    padding: 16px 20px;
+    background: #fef9ec;
+    border-radius: 0 6px 6px 0;
+    margin: 20px 0;
+  }
+
+  .quote-text {
+    font-size: 14px;
+    color: #8a6a10;
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 8px;
+  }
+
+  .quote-attr {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  /* Journal table */
+  .journal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .journal-row {
+    display: grid;
+    grid-template-columns: 2fr 3fr 3fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .journal-row:last-child {
+    border-bottom: none;
+  }
+
+  .journal-cell {
+    padding: 14px 18px;
+    font-size: 12px;
+    border-right: 1px solid var(--border);
+    line-height: 1.5;
+  }
+
+  .journal-cell:last-child {
+    border-right: none;
+  }
+
+  .journal-head {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: #f5f1eb;
+  }
+
+  .journal-cell.field {
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  /* Warning box */
+  .warning {
+    background: #fff5f5;
+    border: 1px solid #f0c0c0;
+    border-radius: 8px;
+    padding: 20px 22px;
+  }
+
+  .warning-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .warning-title::before {
+    content: '⚠';
+    font-size: 12px;
+  }
+
+  .warning-items {
+    display: grid;
+    gap: 8px;
+  }
+
+  .warning-item {
+    font-size: 13px;
+    color: #8a3030;
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .warning-item::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--red);
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .footer-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    border: 1px solid #d4b848;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #fef9ec;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 40px 0;
+  }
+
+  /* Animate in */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section {
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .section:nth-child(1) { animation-delay: 0.05s; }
+  .section:nth-child(2) { animation-delay: 0.1s; }
+  .section:nth-child(3) { animation-delay: 0.15s; }
+  .section:nth-child(4) { animation-delay: 0.2s; }
+  .section:nth-child(5) { animation-delay: 0.25s; }
+  .section:nth-child(6) { animation-delay: 0.3s; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-tag">Options Trader · Psychology Rehab Plan</div>
+    <h1>TRADE YOUR <span>MIND</span><br>FIRST</h1>
+    <p class="header-sub">A structured recovery plan for the four most destructive trading psychology traps — written specifically for you.</p>
+  </div>
+
+  <!-- Diagnosis -->
+  <div class="diagnosis">
+    <div class="diagnosis-title">Your Diagnosed Patterns</div>
+    <div class="diagnosis-items">
+      <div class="diagnosis-item"><span class="num">01</span> Jumping into trades immediately at market open — no confirmation, no patience</div>
+      <div class="diagnosis-item"><span class="num">02</span> Cutting winners too early + holding losers too long (Loss Aversion Bias)</div>
+      <div class="diagnosis-item"><span class="num">03</span> Forcing trades daily instead of waiting for high-probability setups</div>
+      <div class="diagnosis-item"><span class="num">04</span> Revenge trading after losses — emotional decision making destroying capital</div>
+      <div class="diagnosis-item"><span class="num">05</span> Not waiting for candle close + entering on unconfirmed trend reversals</div>
+      <div class="diagnosis-item"><span class="num">06</span> Overconfidence after wins, anchoring bias, social media noise influence</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stat-strip">
+    <div class="stat">
+      <div class="stat-val">80%</div>
+      <div class="stat-label">Losses are psychological</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">3:1</div>
+      <div class="stat-label">Min Risk/Reward Ratio</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">2%</div>
+      <div class="stat-label">Max risk per trade</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">95%</div>
+      <div class="stat-label">Retail traders lose long-term</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">2.5×</div>
+      <div class="stat-label">Pain of loss vs joy of gain</div>
+    </div>
+  </div>
+
+  <!-- PROBLEM 1 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div>
+        <div class="section-title">STOP JUMPING <span class="section-accent">AT OPEN</span></div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-text">"The first 30 minutes are for amateurs. The next hour is for professionals. The best setups appear when everyone else has already made their mistake."</div>
+      <div class="quote-attr">— Market wisdom</div>
+    </div>
+
+    <div class="cards">
+      <div class="card card-accent-red">
+        <div class="card-label">Why you do it</div>
+        <div class="card-title">FOMO + Adrenaline Response</div>
+        <div class="card-body">Market opens and your brain floods with dopamine. You feel like you'll miss the move. This is your reptile brain reacting, not your analytical brain thinking. The open is the most manipulated, illiquid 30 minutes of the day.</div>
+      </div>
+      <div class="card card-accent-green">
+        <div class="card-label">The Fix: 30-Minute Rule</div>
+        <div class="card-title">Observe the First Candle. Always.</div>
+        <div class="card-body">Set a hard rule: <strong style="color:#1a1410">No trades before 9:45 AM IST (after 9:15 open)</strong>. Use this time to watch price action, mark levels, let liquidity stabilize. The best breakouts happen after 10 AM when the noise settles. Write this on a sticky note on your monitor.</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="card">
+        <div class="card-label">Pre-Market Ritual (Do This Instead)</div>
+        <div class="checklist">
+          <div class="check-item"><div class="check-box filled"></div> Mark key support/resistance levels the night before</div>
+          <div class="check-item"><div class="check-box filled"></div> Check global cues: SGX Nifty, Dow Futures, VIX</div>
+          <div class="check-item"><div class="check-box filled"></div> Identify 2–3 setups you will trade IF they form</div>
+          <div class="check-item"><div class="check-box filled"></div> Write your entry, stop-loss, and target BEFORE market opens</div>
+          <div class="check-item"><div class="check-box"></div> Wait silently until 9:45 AM — observe only</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM 2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div>
+        <div class="section-title">LET WINNERS RUN, <span class="section-accent">CUT LOSERS</span></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card card-accent-red">
+        <div class="card-label">Why this happens</div>
+        <div class="card-title">Loss Aversion + Prospect Theory</div>
+        <div class="card-body">Your brain feels the pain of a loss 2.5× more than the pleasure of an equivalent gain. So you hold losers hoping they recover (pain avoidance) and book profits early to feel the dopamine hit of a "win." This is the single biggest account killer in retail trading.</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="grid2">
+        <div class="card card-accent-green">
+          <div class="card-label">Rule: Hard Stop Loss</div>
+          <div class="card-title">Pre-define. Non-negotiable.</div>
+          <div class="card-body">Before entering, decide your stop. Place it as a GTT/SL order immediately after entry. You cannot move it further away. If it hits, it hits. The market is telling you that you were wrong.</div>
+        </div>
+        <div class="card card-accent-blue">
+          <div class="card-label">Rule: Trailing Stop</div>
+          <div class="card-title">Let price do the work.</div>
+          <div class="card-body">Instead of booking profits manually, use a trailing stop-loss. Move it up as price moves up. This removes the emotional "should I book now?" dilemma entirely.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="card card-accent-accent" style="border-left:2px solid var(--accent)">
+        <div class="card-label">The Mantra to Repeat</div>
+        <div class="card-title" style="color:var(--accent)">"My stop loss is my business plan. Booking profit early is leaving money on the table."</div>
+        <div class="card-body">Minimum target = 2× your stop loss distance. Never take a trade where reward is less than 2× risk. This way, even if you're wrong 50% of the time, you make money.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM 3 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div>
+        <div class="section-title">TRADE LESS, <span class="section-accent">EARN MORE</span></div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-text">"I'm only rich because I know when I am wrong... The key is not to be right, but to know when you're wrong." — George Soros</div>
+      <div class="quote-attr">— George Soros</div>
+    </div>
+
+    <div class="cards">
+      <div class="card card-accent-red">
+        <div class="card-label">The Illusion</div>
+        <div class="card-title">Daily P&L is Not a Strategy</div>
+        <div class="card-body">Your brain is wired to want daily results — salary mentality. But markets don't pay salaries. A big trader might do 3 trades in a month. Each with massive conviction. Your 20 trades a day are mostly noise and brokerage fees.</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="grid2">
+        <div class="card">
+          <div class="card-label">How Big Traders Think</div>
+          <div class="checklist" style="margin-top:4px">
+            <div class="check-item"><div class="check-box filled"></div> Wait for A+ setups only</div>
+            <div class="check-item"><div class="check-box filled"></div> Sit in cash 70% of the time</div>
+            <div class="check-item"><div class="check-box filled"></div> Size up when they trade</div>
+            <div class="check-item"><div class="check-box filled"></div> Hold positions patiently</div>
+            <div class="check-item"><div class="check-box filled"></div> Never force a trade</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-label">Your New Rules</div>
+          <div class="checklist" style="margin-top:4px">
+            <div class="check-item"><div class="check-box"></div> Max 1–2 trades per day</div>
+            <div class="check-item"><div class="check-box"></div> No trade = valid decision</div>
+            <div class="check-item"><div class="check-box"></div> Monthly P&L is the scorecard</div>
+            <div class="check-item"><div class="check-box"></div> Only trade marked setups</div>
+            <div class="check-item"><div class="check-box"></div> If unsure, stay out</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="card" style="background:#0f1a0f; border-color:#a0d4b4;">
+        <div class="card-label">Reframe This</div>
+        <div class="card-title" style="color:var(--green)">Not trading IS a trade. It's a trade that costs nothing.</div>
+        <div class="card-body">Every day you sit out and preserve capital is a day your competition loses money. Your cash is your weapon. Guard it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM 4 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div>
+        <div class="section-title">KILL <span class="section-accent">REVENGE TRADING</span></div>
+      </div>
+    </div>
+
+    <div class="warning">
+      <div class="warning-title">Danger Zone — This One Blows Accounts</div>
+      <div class="warning-items">
+        <div class="warning-item">You take a loss → ego bruised → you feel cheated by the market</div>
+        <div class="warning-item">You increase size trying to "win it back" → another loss → panic</div>
+        <div class="warning-item">You keep trading until you've wiped the day's capital and more</div>
+        <div class="warning-item">You end up losing 3–5× the original loss in 30 minutes</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:16px">
+      <div class="grid2">
+        <div class="card card-accent-red">
+          <div class="card-label">Trigger Recognition</div>
+          <div class="card-title">Know the Signs</div>
+          <div class="card-body">Heart racing. Angry at the screen. Wanting to "recover losses now." Increasing position size. These are your revenge triggers. They are physiological. Recognize them before acting.</div>
+        </div>
+        <div class="card card-accent-green">
+          <div class="card-label">The Circuit Breaker</div>
+          <div class="card-title">Hard Daily Loss Limit</div>
+          <div class="card-body">Set a daily loss limit = 2% of capital. When hit, the trading session is OVER. Platform closed. Walk outside. This is non-negotiable. Write it on paper. Tape it to your desk.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="card card-accent-blue">
+        <div class="card-label">Protocol After a Loss</div>
+        <div class="card-title">The 30-Minute Reset</div>
+        <div class="card-body">After any losing trade: <strong style="color:#1a1410">Step away for 30 minutes. No exceptions.</strong> Get water. Walk. Breathe. Review what happened. Ask: "Did I follow my plan?" If yes, the loss is acceptable. If no, what rule did you break? Write it down. Return only if calm — and only if the daily loss limit hasn't been hit.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- PROBLEM 5 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div>
+        <div class="section-title">WAIT FOR <span class="section-accent">CANDLE CLOSE</span></div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <div class="quote-text">"A candle that hasn't closed is not a signal. It is a rumour."</div>
+      <div class="quote-attr">— Price Action Trading Principle</div>
+    </div>
+
+    <div class="cards">
+      <div class="card card-accent-red">
+        <div class="card-label">Why This Kills Options Traders Specifically</div>
+        <div class="card-title">You're Paying Premium for a Lie</div>
+        <div class="card-body">Options are decaying assets. Every second costs you theta. When you enter on an unconfirmed candle, you're paying premium for a move that hasn't happened yet — and may reverse completely before close. A 15-min candle that looks like a breakout at 14:45 can close as a rejection wick at 15:00. You've already lost.</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="grid2">
+        <div class="card card-accent-green">
+          <div class="card-label">Fix A: Candle Close Rule</div>
+          <div class="card-title">Only trade confirmed candles.</div>
+          <div class="card-body">Wait for the candle to fully close. Enter on the <strong style="color:#1a1410">open of the next candle.</strong> Yes, the entry is slightly worse. But you eliminate 80% of false signals. A 5-point worse entry beats a wrong trade every time.</div>
+        </div>
+        <div class="card card-accent-blue">
+          <div class="card-label">Fix B: Reversal Confirmation</div>
+          <div class="card-title">One candle is not a reversal.</div>
+          <div class="card-body">A valid reversal needs: a pattern at a key level + that pattern closing + a follow-through candle + volume support. If all four aren't present, it's not a reversal. It's noise.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="card" style="background:#0a0f1a; border-color:#a0c4e8;">
+        <div class="card-label">Valid Reversal Checklist — All 4 Required</div>
+        <div class="checklist" style="margin-top:8px">
+          <div class="check-item"><div class="check-box"></div> Reversal pattern present (engulfing, pin bar, double top/bottom, H&S)</div>
+          <div class="check-item"><div class="check-box"></div> Pattern forms AT a meaningful S/R level — not in the middle of nowhere</div>
+          <div class="check-item"><div class="check-box"></div> The pattern candle has CLOSED — not just approaching close</div>
+          <div class="check-item"><div class="check-box"></div> Follow-through candle confirms direction with above-average volume</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="card" style="border-left:2px solid var(--accent); background:#fef9ec;">
+        <div class="card-label">The Rule</div>
+        <div class="card-title" style="color:var(--accent)">"If the candle hasn't closed, the story isn't finished. I don't trade unfinished stories."</div>
+        <div class="card-body">Tape this next to your monitor. Read it every time you feel the urge to click buy before the candle closes.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- RESEARCH INSIGHTS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div>
+        <div class="section-title">GLOBAL RESEARCH <span class="section-accent">INSIGHTS</span></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card" style="margin-bottom:4px; background:#edfaf2; border-color:#a0d4b4;">
+        <div class="card-label">Backed by Science — Not Opinion</div>
+        <div class="card-body" style="color:#2a6a3a;">The following insights are drawn from behavioral finance research, neuroscience studies, and institutional trader analysis from around the world. These are the patterns that consistently separate losing retail traders from consistently profitable ones.</div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="rule-card">
+        <div class="rule-icon gold">🧠</div>
+        <div class="rule-content">
+          <div class="rule-title">Kahneman & Tversky — Prospect Theory (Nobel Prize Research)</div>
+          <div class="rule-desc">Humans feel losses 2.5× more intensely than equivalent gains. This is hardwired. It causes you to hold losers (avoiding realizing the pain) and cut winners (grabbing the pleasure quick). The fix is <strong>rules-based exits</strong> — remove the human from the exit decision entirely.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon blue">📊</div>
+        <div class="rule-content">
+          <div class="rule-title">Brad Barber & Terrance Odean — UC Davis Study (65,000 Traders)</div>
+          <div class="rule-desc">The most active traders underperformed the least active traders by 6.5% annually. Overtrading is caused by overconfidence — believing you have an edge when you don't. The study found men overtrade 45% more than women and lose more as a result. <strong>Activity ≠ profitability.</strong></div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon red">⚡</div>
+        <div class="rule-content">
+          <div class="rule-title">Neuroscience: Cortisol & Testosterone Effect (Coates, Cambridge)</div>
+          <div class="rule-desc">After wins, testosterone rises → overconfidence → reckless trades. After losses, cortisol spikes → fear → either paralysis or revenge trading. Your hormones are hijacking your decisions. <strong>Solution: Fixed position sizing always.</strong> Never size up after a win or a loss. Same size. Every trade.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon green">🎯</div>
+        <div class="rule-content">
+          <div class="rule-title">Mark Douglas — "Trading in the Zone" (The Industry Bible)</div>
+          <div class="rule-desc">The best traders think in probabilities, not certainties. They don't need to know if THIS trade wins. They know if they follow their system over 100 trades, the edge plays out. <strong>Your job is not to predict. Your job is to execute your system flawlessly.</strong> Every deviation is a loss of edge.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon gold">🔄</div>
+        <div class="rule-content">
+          <div class="rule-title">Anchoring Bias — Tversky (Behavioral Finance)</div>
+          <div class="rule-desc">You anchor to your entry price and make decisions relative to it ("I'm down ₹5,000 — I need to recover"). The market doesn't know or care about your entry. <strong>Every moment is a new decision:</strong> "If I had no position right now, would I enter here?" If no → exit. Your entry price is irrelevant to future price.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon blue">📱</div>
+        <div class="rule-content">
+          <div class="rule-title">Social Media & Confirmation Bias (MIT Media Lab Research)</div>
+          <div class="rule-desc">Trading Twitter/Telegram tips cause confirmation bias — you seek information that confirms the trade you already want to take. MIT research shows social trading signals increase loss frequency by 34% in retail participants. <strong>Trade your setup. Not someone else's opinion.</strong> Delete trading tip groups.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon red">😤</div>
+        <div class="rule-content">
+          <div class="rule-title">The Disposition Effect — Shefrin & Statman (Journal of Finance)</div>
+          <div class="rule-desc">Formally proven: retail investors sell winners 50% faster than they sell losers. This is universal across markets — US, Europe, India, Japan. It's not a you problem. It's a human brain problem. <strong>The only fix: automate your exits.</strong> SL orders and trailing stops placed immediately after entry.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon green">🌙</div>
+        <div class="rule-content">
+          <div class="rule-title">Sleep & Decision Quality — Walker (UC Berkeley Sleep Research)</div>
+          <div class="rule-desc">Matthew Walker's research shows that sleep-deprived people become 60% more risk-seeking AND worse at reading risk. Many retail traders trade after poor sleep, late-night screen time, or high stress. <strong>Your sleep quality directly determines your trading quality.</strong> No screen after 10 PM if you trade the next morning.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon gold">📉</div>
+        <div class="rule-content">
+          <div class="rule-title">SEBI Study on Indian F&O Traders (2023)</div>
+          <div class="rule-desc">SEBI's own data showed 89% of individual F&O traders lost money over a 3-year period. The top 1% of traders — who were consistently profitable — had one thing in common: <strong>strict risk management and defined rules</strong>, not superior chart-reading skills. The edge is in discipline, not intelligence.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MENTAL FRAMEWORK -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div>
+        <div class="section-title">THE PROFESSIONAL <span class="section-accent">MINDSET SHIFT</span></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="grid2">
+        <div class="card" style="background:#fff5f5; border-color:#f0c0c0;">
+          <div class="card-label" style="color:var(--red)">Retail Trader Mindset</div>
+          <div class="checklist" style="margin-top:8px">
+            <div class="check-item" style="color:#aa7070;"><div class="check-box" style="border-color:#f0c0c0;"></div> "I need to make money today"</div>
+            <div class="check-item" style="color:#aa7070;"><div class="check-box" style="border-color:#f0c0c0;"></div> "This trade will definitely work"</div>
+            <div class="check-item" style="color:#aa7070;"><div class="check-box" style="border-color:#f0c0c0;"></div> "I'll move my SL, it'll come back"</div>
+            <div class="check-item" style="color:#aa7070;"><div class="check-box" style="border-color:#f0c0c0;"></div> "I lost — I must recover now"</div>
+            <div class="check-item" style="color:#aa7070;"><div class="check-box" style="border-color:#f0c0c0;"></div> "More trades = more chances"</div>
+          </div>
+        </div>
+        <div class="card" style="background:#edfaf2; border-color:#a0d4b4;">
+          <div class="card-label" style="color:var(--green)">Professional Trader Mindset</div>
+          <div class="checklist" style="margin-top:8px">
+            <div class="check-item"><div class="check-box filled"></div> "I need to follow my process today"</div>
+            <div class="check-item"><div class="check-box filled"></div> "This setup has an edge over 100 trades"</div>
+            <div class="check-item"><div class="check-box filled"></div> "SL hit = the market told me I was wrong"</div>
+            <div class="check-item"><div class="check-box filled"></div> "I lost — I follow my rules and move on"</div>
+            <div class="check-item"><div class="check-box filled"></div> "Fewer, better trades = more profit"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards" style="margin-top:12px">
+      <div class="card" style="border-left:2px solid var(--accent); background:#fef9ec;">
+        <div class="card-label">The Identity Shift</div>
+        <div class="card-title" style="color:var(--accent)">Stop being a gambler. Start being a businessperson.</div>
+        <div class="card-body">A casino doesn't win every bet. It wins because it has an edge and plays it consistently over thousands of hands. Your job is identical. Build an edge. Execute it without emotion. Protect your capital. The profits follow the process — never the other way around.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- Trading Journal -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">08</div>
+      <div>
+        <div class="section-title">YOUR DAILY <span class="section-accent">TRADE JOURNAL</span></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-label">Why You Must Journal</div>
+        <div class="card-body">90% of traders who journal consistently improve. It creates accountability, pattern recognition in your own behavior, and separates emotional trading from planned trading. Use this template every single day.</div>
+      </div>
+    </div>
+
+    <div class="journal">
+      <div class="journal-row">
+        <div class="journal-cell journal-head">Field</div>
+        <div class="journal-cell journal-head">Before Trade</div>
+        <div class="journal-cell journal-head">After Trade</div>
+      </div>
+      <div class="journal-row">
+        <div class="journal-cell field">Setup</div>
+        <div class="journal-cell">What pattern/level triggered this?</div>
+        <div class="journal-cell">Did the setup play out as expected?</div>
+      </div>
+      <div class="journal-row">
+        <div class="journal-cell field">Entry Logic</div>
+        <div class="journal-cell">Why am I entering NOW?</div>
+        <div class="journal-cell">Was the entry well-timed?</div>
+      </div>
+      <div class="journal-row">
+        <div class="journal-cell field">Stop Loss</div>
+        <div class="journal-cell">Exact SL level (pre-defined)</div>
+        <div class="journal-cell">Did I honor the SL?</div>
+      </div>
+      <div class="journal-row">
+        <div class="journal-cell field">Target</div>
+        <div class="journal-cell">Minimum 2R target level</div>
+        <div class="journal-cell">Did I let it reach target?</div>
+      </div>
+      <div class="journal-row">
+        <div class="journal-cell field">Emotion Check</div>
+        <div class="journal-cell">Am I calm? (1–10 scale)</div>
+        <div class="journal-cell">Did emotion influence any decision?</div>
+      </div>
+      <div class="journal-row">
+        <div class="journal-cell field">Rule Compliance</div>
+        <div class="journal-cell">Am I following my plan 100%?</div>
+        <div class="journal-cell">Which rules did I break, if any?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- The Golden Rules -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">09</div>
+      <div>
+        <div class="section-title">YOUR <span class="section-accent">GOLDEN RULES</span></div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="rule-card">
+        <div class="rule-icon gold">⏱</div>
+        <div class="rule-content">
+          <div class="rule-title">No trades before 9:45 AM. Ever.</div>
+          <div class="rule-desc">Let the open noise die. Watch, analyze, then act. The best setups print after the crowd has already made their mistakes.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon red">🛑</div>
+        <div class="rule-content">
+          <div class="rule-title">Pre-define SL and target before every entry.</div>
+          <div class="rule-desc">If you can't clearly state your stop and target before clicking buy, you are not ready to trade that setup. Wait.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon green">📈</div>
+        <div class="rule-content">
+          <div class="rule-title">Minimum 2:1 reward-to-risk. No exceptions.</div>
+          <div class="rule-desc">Risk ₹100 only if you can realistically make ₹200. This one rule alone will turn a losing trader into a breakeven trader — and a breakeven trader into a profitable one.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon gold">💰</div>
+        <div class="rule-content">
+          <div class="rule-title">Daily loss limit = 2% of capital. Stop when hit.</div>
+          <div class="rule-desc">This is your risk management. No amount of "I can recover it" justifies blowing through this limit. Protect the capital above all else.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon blue">🧘</div>
+        <div class="rule-content">
+          <div class="rule-title">30-minute break after every losing trade.</div>
+          <div class="rule-desc">Mandatory. Non-negotiable. Your emotional brain needs time to cool before your rational brain can function again. This single habit will save your account.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon red">🕯</div>
+        <div class="rule-content">
+          <div class="rule-title">Never enter before a candle closes.</div>
+          <div class="rule-desc">An unconfirmed candle is not a signal. Enter on the open of the next candle after confirmation. Always. No exceptions for options traders — theta costs you every second you're wrong.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon gold">📐</div>
+        <div class="rule-content">
+          <div class="rule-title">Same position size. Every trade. Always.</div>
+          <div class="rule-desc">Never increase size after a win (overconfidence) or a loss (revenge). Fixed sizing removes hormones from the equation. Consistency of size = consistency of results.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon blue">📵</div>
+        <div class="rule-content">
+          <div class="rule-title">No trading tips, no Telegram groups, no Twitter calls.</div>
+          <div class="rule-desc">Trade your setup. Not someone else's opinion. Social media signals increase retail loss frequency by over 30%. Your analysis only — or no trade.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon green">📓</div>
+        <div class="rule-content">
+          <div class="rule-title">Journal every trade. Every single one.</div>
+          <div class="rule-desc">Without data on your own behavior, you will repeat the same mistakes indefinitely. The journal is your mirror. Use it honestly.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-icon gold">🌙</div>
+        <div class="rule-content">
+          <div class="rule-title">8 hours sleep. No screens after 10 PM.</div>
+          <div class="rule-desc">Sleep deprivation makes you 60% more risk-seeking and worse at reading risk simultaneously. Your trading quality is directly determined by your sleep quality the night before.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-text">TRADING PSYCHOLOGY PLAN · PERSONAL USE</div>
+    <div class="footer-badge">Discipline = Edge</div>
+  </div>
+
+</div>
+</body>
+</html>
