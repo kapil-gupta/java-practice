@@ -12,6 +12,7 @@ import com.kapil.accounts.mapper.CustomerMapper;
 import com.kapil.accounts.repository.AccountRepository;
 import com.kapil.accounts.repository.CustomerRepository;
 import com.kapil.accounts.service.IAccountService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -78,6 +79,7 @@ public class IAccountServiceImpl implements IAccountService {
     }
 
     @Override
+    @Transactional
     public boolean deleteAccountByMobileNumber(String mobileNumber) {
         Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
                 () -> new ResourceNotFoundException("Customer","mobileNumber",mobileNumber)
@@ -85,8 +87,8 @@ public class IAccountServiceImpl implements IAccountService {
         Account account = accountRepository.findByCustomerId(customer.getCustomerId()).orElseThrow(
                 () -> new ResourceNotFoundException("Account","customerId",customer.getCustomerId().toString())
         );
-        customerRepository.delete(customer);
-        accountRepository.delete(account);
+        customerRepository.deleteById(customer.getCustomerId());
+        accountRepository.deleteByCustomerId(customer.getCustomerId());
         return true;
 
     }
